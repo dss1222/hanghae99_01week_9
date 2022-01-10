@@ -5,7 +5,7 @@ from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
-db = client.project
+db = client.project #dtd
 
 
 # HTML 화면 보여주기
