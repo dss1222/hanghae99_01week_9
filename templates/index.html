@@ -1,88 +1,67 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>치킨 어때!</title>
+    <title>치킨 어때 🍗</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hahmlet:wght@400&display=swap" rel="stylesheet">
+    <link href='{{ url_for("static", filename="mystyle.css") }}' rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <style>
-        .center {
-            text-align: center;
+
+        /*검색창 css*/
+        .search-box {
+            width: 30%;
+            margin-bottom: 20px;
+            margin-left: auto;
+            max-width: 300px;
         }
 
-        .star-list {
-            width: 500px;
-            margin: 20px auto 0 auto;
+        /*카드 수평 나열*/
+        {#.card-columns{#}
+        {#    display: flex;#}
+        {#    flex-direction: row;#}
+        {#}#}
+        {#.card {#}
+        {#    display: flex;#}
+        {#    justify-content: space-between;#}
+        {#    margin: 0 70px;#}
+        {#    margin-top: 65px;#}
+        {#    flex-wrap: wrap;#}
+            {#float: left;#}
+        {#}#}
+
+
+        .like {
+            float: right;
         }
 
-        .star-name {
-            display: inline-block;
-        }
-
-        .star-name:hover {
-            text-decoration: underline;
-        }
-
-        .card {
-            margin-bottom: 15px;
-        }
-        .wrap{
-            margin:auto;
-        }
     </style>
     <script>
-        $(document).ready(function () {
-            showStar();
-        });
 
-        function showStar() {
-            $.ajax({
-                type: 'GET',
-                url: '/api/list?sample_give=샘플데이터',
-                data: {},
-                success: function (response) {
-                    let mychicken = response['chickens']
-                    for (let i = 0; i < mychicken.length; i++) {
-                        let name = mychicken[i]['name']
-                        let img_url = mychicken[i]['img_url']
-                        let like = mychicken[i]['like']
-                        let dislike = mychicken[i]['dislike']
-                        let status = mychicken[i]['status']
-                        let brand = mychicken[i]['brand']
-
-                        let temp_html = `<div class="card" style="width: 18rem;">
-                                              <img class="card-img-top" src="${img_url}" alt="Card image cap">
-                                              <div class="card-body">
-                                                <h5 class="card-title">${name}</h5>
-                                                <p class="card-text">${status}</p>
-                                              </div>
-                                              <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">${brand}</li>
-                                                <li class="list-group-item">${like}</li>
-                                                <li class="list-group-item">${dislike}</li>
-                                              </ul>
-                                              <div class="card-body">
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
-                                              </div>
-                                            </div>`
-                        $('#box').append(temp_html)
-
-
-                    }
-                }
-            });
-        }
-
-        function likeStar(name) {
+        function likeChicken(name) {
             $.ajax({
                 type: 'POST',
                 url: '/api/like',
-                data: {sample_give: '샘플데이터'},
+                data: {name_give: name},
                 success: function (response) {
                     alert(response['msg']);
+                    window.location.reload();
                 }
             });
         }
@@ -100,21 +79,41 @@
 
     </script>
 </head>
-<body class="wrap">
-<section class="hero is-warning">
-    <div class="hero-body">
-        <div class="container center">
-            <h1 class="title">
-                치킨 어때 🐔
-            </h1>
-            <h2 class="subtitle">
-                꼬꼬댁~
-            </h2>
+<body>
+<div class="wrap">
+    <div class="banner" onclick="window.location.href = '/'">
+        <a href="/login" class="badge badge-pill badge-secondary logout">로그아웃</a>
+    </div>
+
+    <div class="contents">
+        <div class="search-box d-flex justify-content-center">
+            <input id="input-chicken" class="form-control" style="margin-right: 0.5rem; border-color: #ffc107;">
+            <button class="btn btn-outline-warning" onclick="find_word()" ><i class="fa fa-search"></i></button>
+        </div>
+        <div class="card-columns" id="chicken-box">
+            {% for chicken in chickens %}
+            <div class="card" id="chicken-{{ chicken.name }}" style="border-color: lightgrey">
+                <img class="card-img-top" src="{{chicken.img_url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/posts/{{ chicken.name }}" style="color: black">{{chicken.name}}</a>
+                        <a href="#" onclick="likeChicken('{{chicken.name}}')" class="card-footer-item has-text-info like"
+                           style="color:darkorange ">
+                                                      <span class="icon"><i class="fa fa-thumbs-o-up"
+                                                                            aria-hidden="true"></i> {{ chicken.like }}
+                                                    </span>
+                        </a>
+
+                    </h5>
+                    <p class="card-text"><small class="text-muted">{{ chicken.brand }}</small></p>
+                    <p class="card-text">{{ chicken.status }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
         </div>
     </div>
-</section>
-<div class="card" style="width: 18rem;" id="box">
-
 </div>
+
+
 </body>
 </html>
