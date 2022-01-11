@@ -56,7 +56,7 @@
         }
 
         .card-img-top {
-        height: 320px;
+            height: 320px;
 
         }
 
@@ -87,6 +87,25 @@
             });
         }
 
+        let names = {{ chickens|tojson }};
+        let name_list=[];
+        for (let i=0; i<names.length;i++){
+            name_list.push(names[i]["name"])
+        }
+        console.log(name_list)
+        function find_name() {
+            let name = $("#input-chicken").val()
+            if(name_list.includes(name)){
+                //리스트에 있으면 하이라이트
+                alert(name)
+            }
+            else{
+                //리스트에 없으면 alert창
+                alert("찾으시는 치킨이 없습니다.")
+                window.location.reload()
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -98,13 +117,13 @@
     <div class="contents">
         <div class="search-box d-flex justify-content-center">
             <input id="input-chicken" class="form-control" style="margin-right: 0.5rem; border-color: #ffc107;">
-            <button class="btn btn-outline-warning" onclick="find_word()"><i class="fa fa-search"></i></button>
+            <button class="btn btn-outline-warning" onclick="find_name()"><i class="fa fa-search"></i></button>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {#jinja2로 for문 돌리기#}
             {% for chicken in chickens %}
                 <div class="col" id="chicken-{{ chicken.name }}">
-                    <div class="card h-100" >
+                    <div class="card h-100" ">
                         <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><a href="/posts/{{ chicken.name }}"

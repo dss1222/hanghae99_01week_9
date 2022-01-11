@@ -4,11 +4,10 @@
 
 .contents {
     /*모든 페이지 적용*/
-    width: 100%;
+    width: 80%;
     max-width: 100vw;
     margin: auto;
     padding: 60px 5%;
-
 }
 
 /*배경 배너 css*/
@@ -40,5 +39,14 @@
     font-size: 15px;
     font-weight: bold;
     text-align: center;
+    color: white;
+}
+/*하이라이트 클래스*/
+tr.highlight > td {
+    background-color: #e8344e;
+    color: white;
+}
+/*하이라이트 클래스*/
+tr.highlight a {
     color: white;
 }
