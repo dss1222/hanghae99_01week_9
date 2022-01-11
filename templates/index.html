@@ -53,7 +53,20 @@
         }
 
         .card-img-top {
-        height: 290px;
+            margin-left : 70px;
+            width: 450px;
+            height: 400px;
+        }
+        .box-size{
+            width:580px;
+            height:700px;
+        }
+        .font-sizeL{
+            font-size: 40px;
+        }
+
+        .font-sizeS{
+            font-size:25px;
         }
 
 
@@ -99,11 +112,11 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {#jinja2로 for문 돌리기#}
             {% for chicken in chickens %}
-                <div class="col" id="chicken-{{ chicken.name }}">
-                    <div class="card h-100" >
+                <div class="col font-sizeS" id="chicken-{{ chicken.name }}">
+                    <div class="card h-100 box-size" >
                         <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title"><a href="/posts/{{ chicken.name }}"
+                            <h5 class="card-title font-sizeL"><a href="/posts/{{ chicken.name }}"
                                                       style="text-decoration-line : none; color: black;">{{ chicken.name }}
                             </a>
                                 <a href="#" onclick="likeChicken('{{ chicken.name }}')"
