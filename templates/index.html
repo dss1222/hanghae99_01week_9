@@ -61,9 +61,10 @@
         }
 
 
+
     </style>
     <script>
-
+        //좋아요 함수
         function likeChicken(name) {
             $.ajax({
                 type: 'POST',
@@ -86,17 +87,19 @@
                 }
             });
         }
-
+        //검색기능을 위한 변수 선언
         let names = {{ chickens|tojson }};
         let name_list=[];
         for (let i=0; i<names.length;i++){
             name_list.push(names[i]["name"])
         }
+        //검색기능 함수
         console.log(name_list)
         function find_name() {
             let name = $("#input-chicken").val()
             if(name_list.includes(name)){
-                //리스트에 있으면 하이라이트
+                //스크롤 이동
+                {#$(`#name-${name}`).scrollIntoView();#}
                 alert(name)
             }
             else{
@@ -109,21 +112,21 @@
     </script>
 </head>
 <body>
-<div class="wrap">
-    <div class="banner" onclick="window.location.href = '/'">
+<div class="wrap"> {# 전체 div #}
+    <div class="banner" onclick="window.location.href = '/'"> {#배너#}
         <a href="/login" class="badge rounded-pill bg-secondary logout" style="text-decoration-line: none">로그아웃</a>
     </div>
 
-    <div class="contents">
+    <div class="contents"> {# 검색 기능 #}
         <div class="search-box d-flex justify-content-center">
             <input id="input-chicken" class="form-control" style="margin-right: 0.5rem; border-color: #ffc107;">
             <button class="btn btn-outline-warning" onclick="find_name()"><i class="fa fa-search"></i></button>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {#jinja2로 for문 돌리기#}
-            {% for chicken in chickens %}
+            {% for chicken in chickens %} {# html #}
                 <div class="col" id="chicken-{{ chicken.name }}">
-                    <div class="card h-100" ">
+                    <div class="card h-100" >
                         <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><a href="/posts/{{ chicken.name }}"
