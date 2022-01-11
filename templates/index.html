@@ -12,9 +12,12 @@
     {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"#}
     {#          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"#}
     {#          crossorigin="anonymous">#}
+
+    <!-- 폰트-->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hahmlet:wght@400&display=swap"
           rel="stylesheet">
+    <!-- css 파일 불러오기 (배너, 배경)-->
     <link href='{{ url_for("static", filename="mystyle.css") }}' rel="stylesheet">
 
     <!-- JavaScript Bundle with Popper -->
@@ -51,14 +54,10 @@
             position: absolute;
             right: 15px;
         }
-        .font-sizeL{
-            font-size: 30px;
-        }
-        .font-sizeM{
-            font-size: 15px;
-        }
-        .font-sizeS{
-            font-size: 20px;
+
+        .card-img-top {
+        height: 320px;
+
         }
 
 
@@ -105,10 +104,10 @@
             {#jinja2로 for문 돌리기#}
             {% for chicken in chickens %}
                 <div class="col" id="chicken-{{ chicken.name }}">
-                    <div class="card h-100" style="height:600px; width:450px; padding-bottom: 100px;" >
-                        <img src="{{ chicken.img_url }}" class="h-70" alt="..." style="height: 350px; width: 350px;margin-left: 45px;">
+                    <div class="card h-100" >
+                        <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title font-sizeL"><a href="/posts/{{ chicken.name }}"
+                            <h5 class="card-title"><a href="/posts/{{ chicken.name }}"
                                                       style="text-decoration-line : none; color: black;">{{ chicken.name }}
                             </a>
                                 <a href="#" onclick="likeChicken('{{ chicken.name }}')"
@@ -119,8 +118,8 @@
                                                     </span>
                                 </a>
                             </h5>
-                            <p class="card-text font-sizeM"><small class="text-muted">{{ chicken.brand }}</small></p>
-                            <p class="card-text font-sizeS">{{ chicken.status }}</p>
+                            <p class="card-text"><small class="text-muted">{{ chicken.brand }}</small></p>
+                            <p class="card-text">{{ chicken.status }}</p>
 
                         </div>
                     </div>

@@ -3,7 +3,7 @@
     <head>
 
         <!-- Webpage Title -->
-        <title>Log In | SWEETER</title>
+        <title>Log In | 치킨어때</title>
 
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -11,6 +11,14 @@
 
         <!-- Bulma CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <!-- 폰트-->
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hahmlet:wght@400&display=swap"
+              rel="stylesheet">
+
+
+        <!-- css 파일 불러오기 (배너, 배경)-->
+        <link href='{{ url_for("static", filename="mystyle.css") }}' rel="stylesheet">
 
         <!-- Font Awesome CSS -->
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -215,12 +223,10 @@
 
     </head>
     <body>
-        <section class="hero is-white">
-            <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-                <h1 class="title is-sparta">SWEETER</h1>
-                <h3 class="subtitle is-sparta">세상을 달달하게</h3>
-            </div>
-        </section>
+    <div class="wrap">
+    <div class="banner" onclick="window.location.href = '/'">
+
+    </div>
         <section class="section">
             <div class="container">
                 <div class="box" style="max-width: 480px;margin:auto">
@@ -233,7 +239,7 @@
                                         <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
                                     </div>
                                     <div id="btn-check-dup" class="control is-hidden">
-                                        <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                        <button class="button is-warning" onclick="check_dup()">중복확인</button>
                                     </div>
 
                                 </div>
@@ -253,7 +259,7 @@
                             </div>
                             <div id="div-sign-in-or-up" class="has-text-centered">
                                 <nav class="level is-mobile">
-                                    <button class="level-item button is-sparta" onclick="sign_in()">
+                                    <button class="level-item button is-warning " onclick="sign_in()">
                                         로그인
                                     </button>
 
@@ -262,7 +268,7 @@
                                 <h4 class="mb-3">아직 회원이 아니라면</h4>
                                 <nav class="level is-mobile">
 
-                                    <button class="level-item button is-sparta is-outlined"
+                                    <button class="level-item button is-warning is-outlined"
                                             onclick="toggle_sign_up()">
                                         회원가입하기
                                     </button>
@@ -282,10 +288,10 @@
                                     </div>
                                 </div>
                                 <nav class="level is-mobile">
-                                    <button class="level-item button is-sparta" onclick="sign_up()">
+                                    <button class="level-item button is-warning" onclick="sign_up()">
                                         회원가입
                                     </button>
-                                    <button class="level-item button is-sparta is-outlined" onclick="toggle_sign_up()">
+                                    <button class="level-item button is-warning is-outlined" onclick="toggle_sign_up()">
                                         취소
                                     </button>
                                 </nav>
@@ -298,6 +304,6 @@
 
             </div>
         </section>
-
+    </div>
     </body>
     </html>

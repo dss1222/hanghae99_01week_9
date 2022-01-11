@@ -4,10 +4,10 @@
 
 .contents {
     /*모든 페이지 적용*/
-    width: 80%;
-    max-width: 80vw;
+    width: 100%;
+    max-width: 100vw;
     margin: auto;
-    padding: 60px 4%;
+    padding: 60px 5%;
 
 }
 
