@@ -64,6 +64,10 @@
             height: 320px;
 
         }
+        div.highlight {
+            background: #e8344e;
+        }
+
 
 
 
@@ -92,25 +96,32 @@
                 }
             });
         }
+
         //검색기능을 위한 변수 선언
-        let names = {{ chickens|tojson }};
-        let name_list=[];
-        for (let i=0; i<names.length;i++){
-            name_list.push(names[i]["name"])
+        let chickens = {{ chickens|tojson }};
+        let chicken_list = [];
+        for (let i = 0; i < chickens.length; i++) {
+            chicken_list.push(chickens[i]["name"])
         }
-        //검색기능 함수
-        console.log(name_list)
-        function find_name() {
-            let name = $("#input-chicken").val()
-            if(name_list.includes(name)){
-                //스크롤 이동
-                {#$(`#name-${name}`).scrollIntoView();#}
-                alert(name)
+        console.log(chicken_list)
+
+        function find_chicken() {
+            let chicken = $("#input-chicken").val().toLowerCase()
+            if (chicken == "") {
+                alert("검색어를 입력해주세요")
+                return
             }
-            else{
-                //리스트에 없으면 alert창
-                alert("찾으시는 치킨이 없습니다.")
-                window.location.reload()
+            if (chicken_list.includes(chicken)) {
+                //리스트에 있으면 하이라이트
+                alert('찾았습니다!')
+                $(`#chicken-${chicken}`).addClass("highlight")
+                $(`#chicken-${chicken}`).siblings().removeClass("highlight")
+                $(`#chicken-${chicken}`)[0].scrollIntoView()
+
+            } else {
+                //리스트에 없으면 메시지
+                alert('그런 치킨은 없어요...')
+                window.location.href = '/'
             }
         }
 
@@ -119,6 +130,7 @@
             alert('로그아웃!')
             window.location.href = "/login"
         }
+
 
     </script>
 </head>
@@ -130,7 +142,7 @@
     <div class="contents"> {# 검색 기능 #}
         <div class="search-box d-flex justify-content-center">
             <input id="input-chicken" class="form-control" style="margin-right: 0.5rem; border-color: #ffc107;">
-            <button class="btn btn-outline-warning" onclick="find_name()"><i class="fa fa-search"></i></button>
+            <button class="btn btn-outline-warning" onclick="find_chicken()"><i class="fa fa-search"></i></button>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {#jinja2로 for문 돌리기#}
