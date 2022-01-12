@@ -1,6 +1,8 @@
 * {
     font-family: 'Hahmlet', serif;
 }
+
+
 /*박스 사이즈 조정 */
 .contents {
     /*모든 페이지 적용*/
@@ -41,12 +43,51 @@
     text-align: center;
     color: white;
 }
-/*하이라이트 클래스*/
-tr.highlight > td {
+
+
+body {
+    background-color: RGBA(232, 52, 78, 0.2);
+    min-height: 100vh;
+}
+
+.section {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+.is-sparta {
+    color: #e8344e !important;
+}
+
+.button.is-sparta {
     background-color: #e8344e;
-    color: white;
+    border-color: transparent;
+    color: #fff !important;
 }
-/*하이라이트 클래스*/
-tr.highlight a {
-    color: white;
+
+.button.is-sparta.is-outlined {
+    background-color: transparent;
+    border-color: #e8344e;
+    color: #e8344e !important;
 }
+
+.modal-content {
+    width: 600px;
+    max-width: 80%;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+}
+
+
+

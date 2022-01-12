@@ -50,14 +50,10 @@
         }
 
 
-        .card-title {
-            position: relative;
 
-        }
 
         .like {
-            position: absolute;
-            right: 5px;
+            margin-left: 5px;
         }
 
         .card-img-top {
@@ -137,21 +133,30 @@
             {% for chicken in chickens %} {# html #}
                 <div class="col" id="chicken-{{ chicken.name }}">
                     <div class="card h-100" >
-                        <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
+                        <a href="/detail/{{ chicken.name }}">
+                            <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="..."></a>
                         <div class="card-body">
-                            <h5 class="card-title"><a href="/posts/{{ chicken.name }}"
+                            <h5 class="card-title"><a href="/detail/{{ chicken.name }}"
                                                       style="text-decoration-line : none; color: black;">{{ chicken.name }}
-                            </a>
-                                <a href="#" onclick="likeChicken('{{ chicken.name }}')"
-                                   class="card-footer-item has-text-info like"
-                                   style="text-decoration-line : none; color:darkorange; ">
-                                                      <span class="icon"><i class="fa fa-thumbs-o-up"
-                                                                            aria-hidden="true"></i> {{ chicken.like }}
-                                                    </span>
+
+                                <a href="#" onclick="likeChicken('{{ chicken.name }}', 'up')"
+                                   class="card-footer-item has-text-info type like" aria-label="up" style="text-decoration-line : none; color:darkorange;"
+                                >
+                                                      <span class="icon" ><i
+                                                              class="fa fa-thumbs-o-up"
+                                                              aria-hidden="true"></i>
+                                                    </span><span class="like-num">{{ chicken.like }} </span>
+                                </a>
+                                <a href="#" onclick="chicken_like('{{ chicken.chicken_id }}', 'down')"
+                                   class="card-footer-item has-text-info type like" aria-label="down" style="text-decoration-line : none; color:grey;"
+                                >
+                                    <span class="icon" ><i class="fa fa-thumbs-o-down"
+                                                                               aria-hidden="true"></i>
+                                                    </span><span class="dislike-num"> {{ chicken.dislike }}</span>
                                 </a>
                             </h5>
                             <p class="card-text"><small class="text-muted">{{ chicken.brand }}</small></p>
-                            <p class="card-text">{{ chicken.status }}</p>
+{#                            <p class="card-text">{{ chicken.status }}</p>#}
 
                         </div>
                     </div>
