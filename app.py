@@ -67,7 +67,7 @@ def delete_star():
 def detail(keyword):
     # API에서 단어 뜻 찾아서 결과 보내기
     chicken = db.chicken.find_one({"name": keyword}, {'_id': False})
-    return render_template("detail.html", chicken=chicken)
+    return render_template("detail.html", chicken=chicken, target=keyword)
 
 ## 리뷰 작성 API
 
@@ -178,15 +178,15 @@ def posting():
         return redirect(url_for("home"))
 
 
+
 @app.route("/get_posts/", methods=['GET'])
 def get_posts():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 포스팅 목록 받아오기
-
-
-        posts = list(db.posts.find({}).sort("date", -1).limit(20))
+        target_receive=request.args.get("target_give")
+        posts = list(db.posts.find({"target": target_receive}).sort("date", -1).limit(20))
         for post in posts:
             post["_id"] = str(post["_id"])
 

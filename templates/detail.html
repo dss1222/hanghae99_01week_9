@@ -84,6 +84,7 @@
 
     </style>
     <script>
+        let target = "{{ target }}"
         $(document).ready(function () {
             $("#post-box").empty();
             get_posts();
@@ -101,6 +102,7 @@
             let comment = $('#textarea-post').val();
             let today = new Date().toISOString();
             let target = "{{ chicken.name }}";
+            console.log(target);
             $.ajax({
                 type: "POST",
                 url: "/posting",
@@ -118,12 +120,14 @@
         }
 
         function get_posts() {
+
             $.ajax({
                 type: "GET",
-                url: "/get_posts?target_give=target",
+                url: `/get_posts?target_give=${target}`,
                 data: {},
                 success: function (response) {
                     if (response["result"] == "success") {
+                        console.log(response["posts"])
                         let posts = response["posts"]
                         for (let i = 0; i < posts.length; i++) {
                             let post = posts[i]
@@ -132,37 +136,22 @@
                             let html_temp = `<div class="box" id="${post["_id"]}">
                     <article class="media">
                         <div class="media-left">
-                            <figure class="image is-64x64">
-                                <div>${post['star']}</div>
+                            <figure class="image is-96x96">
+                             <img src="/static/chicken.png" alt="Image" style="object-fit: cover">
                             </figure>
                         </div>
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    <strong>${post['username']}</strong> <small>${time_before}</small>
-                                    <br>
-                                    ${post['comment']}
+                                     <strong>${post['username']}</strong>
+                                    <br> ${post['star']} <small>${time_before}</small>
+                                      <br>
+                                       <br>${post['comment']}
+
+
                                 </p>
                             </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item" aria-label="reply">
-            <span class="icon is-small">
-              <i class="fas fa-reply" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                    <a class="level-item" aria-label="retweet">
-            <span class="icon is-small">
-              <i class="fas fa-retweet" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                    <a class="level-item" aria-label="like">
-            <span class="icon is-small">
-              <i class="fas fa-heart" aria-hidden="true"></i>
-            </span>
-                                    </a>
-                                </div>
-                            </nav>
+
                         </div>
                     </article>
                 </div>`
@@ -257,8 +246,8 @@
                             <div class="media-content">
                                 <div class="field">
                                     <p class="control">
-                                    <div id="star-select" class="select is-warning">
-                                        <select>
+                                    <div class="select is-warning">
+                                        <select id="star-select">
                                             <option>나의 점수는?</option>
                                             <option>⭐</option>
                                             <option>⭐⭐</option>
