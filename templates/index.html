@@ -34,11 +34,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
-    <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <style>
 
         /*검색창 css*/
@@ -57,7 +52,7 @@
 
         .like {
             position: absolute;
-            right: 5px;
+            right: 15px;
         }
 
         .card-img-top {
@@ -114,18 +109,13 @@
             }
         }
 
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'})
-            alert('로그아웃!')
-            window.location.href = "/login"
-        }
-
     </script>
 </head>
 <body>
 <div class="wrap"> {# 전체 div #}
-    <a href="" class="badge rounded-pill bg-secondary logout" style="text-decoration-line: none" onclick="sign_out()">로그아웃</a>
-    <div class="banner" onclick="window.location.href = '/'"> {#배너#} </div>
+    <div class="banner" onclick="window.location.href = '/'"> {#배너#}
+        <a href="/login" class="badge rounded-pill bg-secondary logout" style="text-decoration-line: none">로그아웃</a>
+    </div>
 
     <div class="contents"> {# 검색 기능 #}
         <div class="search-box d-flex justify-content-center">

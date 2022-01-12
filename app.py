@@ -17,21 +17,13 @@ client = MongoClient('localhost', 27017)
 #client = MongoClient('mongodb://13.124.82.108', 27017, username="test", password="test")
 db = client.project #dtd
 
+
+# HTML 화면 보여주기
 @app.route('/')
-def home():
-    # HTML 화면 보여주기
-    # DB에 저장된 단어 찾아서 HTML에 나타내기
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        chickens = list(db.chicken.find({}, {'_id': False}).sort('like', -1))
-        return render_template('index.html', chickens=chickens)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
+def main():
+    #DB에 저장된 단어 찾아서 HTML에 나타내기
+    chickens = list(db.chicken.find({}, {'_id':False}).sort('like',-1))
+    return render_template('index.html', chickens=chickens)
 
 
 
@@ -65,7 +57,17 @@ def delete_star():
 
 # 로그인 위한 추가 API
 
+@app.route('/')
+def home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
+        return render_template('index.html')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route('/login')
