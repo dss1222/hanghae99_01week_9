@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 # client = MongoClient('localhost', 27017)
-client = MongoClient('mongodb://13.124.82.108', 27017, username="test", password="test")
+client = MongoClient('mongodb://54.180.148.164', 27017, username="test", password="test")
 db = client.project #dtd
 
 @app.route('/')
@@ -63,11 +63,18 @@ def delete_star():
     return jsonify({'msg': 'delete 연결되었습니다!'})
 
 
+@app.route('/detail/<keyword>')
+def detail(keyword):
+    # API에서 단어 뜻 찾아서 결과 보내기
+    chicken = db.chicken.find_one({"name": keyword}, {'_id': False})
+    return render_template("detail.html", chicken=chicken, target=keyword)
+
+## 리뷰 작성 API
+
+
+
+
 # 로그인 위한 추가 API
-
-
-
-
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
@@ -151,18 +158,39 @@ def posting():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 포스팅하기
+        user_info = db.users.find_one({"username": payload["id"]})
+        star_receive = request.form["star_give"]
+        comment_receive = request.form["comment_give"]
+        date_receive = request.form["date_give"]
+        target_receive= request.form["target_give"]
+
+        doc = {
+            "username": user_info["username"],
+            "star": star_receive,
+            "comment": comment_receive,
+            "date": date_receive,
+            "target": target_receive
+
+        }
+        db.posts.insert_one(doc)
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
 
-@app.route("/get_posts", methods=['GET'])
+
+@app.route("/get_posts/", methods=['GET'])
 def get_posts():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 포스팅 목록 받아오기
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
+        target_receive=request.args.get("target_give")
+        posts = list(db.posts.find({"target": target_receive}).sort("date", -1).limit(20))
+        for post in posts:
+            post["_id"] = str(post["_id"])
+
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -181,3 +209,11 @@ def update_like():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
+
+
+
+
+
+
+
+
