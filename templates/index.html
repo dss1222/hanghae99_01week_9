@@ -95,6 +95,7 @@
         let chicken_list = [];
         for (let i = 0; i < chickens.length; i++) {
             chicken_list.push(chickens[i]["name"])
+
         }
         console.log(chicken_list)
 
@@ -140,11 +141,11 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {#jinja2로 for문 돌리기#}
             {% for chicken in chickens %} {# html #}
-            <div class="col" id="{{chicken._id}}">
-                <div class="card h-100">
+            <div class="col" id="chicken-{{ chicken.name }}" >
+                <div class="card h-100" id="{{chicken._id}}">
                     <a href="/detail/{{ chicken.name }}">
                         <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="..."></a>
-                    <div class="card-body">
+                    <div class="card-body" >
                         <h5 class="card-title"><a href="/detail/{{ chicken.name }}"
                                                   style="text-decoration-line : none; color: black;">{{ chicken.name }}
 
