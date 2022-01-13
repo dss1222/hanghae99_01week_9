@@ -54,7 +54,7 @@ def detail(keyword):
 
         # API에서 해당 치킨 데이터 찾아서 결과 보내기
         chicken = db.chicken.find_one({"name": keyword}, {'_id': False})
-        # chicken 데이터와 상세페이지 리뷰 포스팅을 위해 keyword(치킨 이름)도 detail.html으로 보내기기
+        # 해당 chicken 데이터와 상세페이지 리뷰 포스팅을 위해 keyword(치킨 이름)도 detail.html으로 보내기기
         return render_template("detail.html", chicken=chicken, target=keyword)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))

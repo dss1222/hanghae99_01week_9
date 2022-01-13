@@ -42,15 +42,17 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="/static/myjs.js"></script>
+
 
     <style>
         {# 이미지 박스 CSS #}
         .img-box {
             display: inline-block;
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 300px;
             text-align: center;
-        {#float: left;#}{#margin: auto;#} padding: 10px;
+
         }
 
         .container {
@@ -69,11 +71,6 @@
             font-size: 14px;
         }
 
-        .btn-sparta {
-            color: #fff;
-            background-color: #e8344e;
-            border-color: #e8344e;
-        }
 
         .btn-outline-sparta {
             color: #e8344e;
@@ -85,28 +82,26 @@
 
     </style>
     <script>
+        // 상세페이지 속 치킨 이름이 무엇인지 jinja2로 받아옴
         let target = "{{ target }}"
         $(document).ready(function () {
+            // 로딩되자마자 리뷰 보여주기
             $("#post-box").empty();
             get_posts();
         })
 
 
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'})
-            alert('로그아웃!')
-            window.location.href = "/login"
-        }
 
+        // 리뷰 작성 함수
         function post() {
+            // 작성에 필요한 별점, 리뷰 글, 현재 날짜/시간, 해당 페이지 치킨이름 각 변수에 할당
             let star = $('#star-select').val();
             let comment = $('#textarea-post').val();
             let today = new Date().toISOString();
             let target = "{{ chicken.name }}";
 
-
+            // 리뷰 작성 란이나 별점 란을 채우지 않았다면 메시지 띄우기
             if (comment == "" || star == "나의 점수는?") {
-                // comment나 star 입력 란에 값이 없으면 메시지
                 if (comment == "") alert('리뷰를 입력해주세요')
                 else alert('별점을 입력해주세요')
 
@@ -133,13 +128,14 @@
 
         }
 
-
+        // 서버에서 리뷰 데이터 받아와서 html 추가하기
         function get_posts() {
             $.ajax({
                 type: "GET",
                 url: `/get_posts?target_give=${target}`,
                 data: {},
                 success: function (response) {
+                    // 해당 페이지의 치킨과 관련된 데이터만 받아왔음
                     if (response["result"] == "success") {
                         console.log(response["posts"])
                         let posts = response["posts"]
@@ -177,7 +173,9 @@
             })
         }
 
-        function deleteStar(comment) { //삭제기능
+        // 리뷰 삭제 함수
+        // 특정 리뷰를 삭제하기 위해 comment 값 서버로 보내기
+        function deleteStar(comment) {
             $.ajax({
                 type: 'POST',
                 url: '/delete',
@@ -189,6 +187,7 @@
             });
         }
 
+        // 시간 보여주는 형태 함수
         function time2str(date) {
             let today = new Date()
             let time = (today - date) / 1000 / 60 // 분
@@ -264,7 +263,8 @@
                 <div class="media-content">
                     <div class="field">
                         <p class="control">
-                            {# 맛 리뷰 입력 칸(클릭하면 별점 선택, 리뷰 입력 킨 호충충)#}
+                            {# 맛 리뷰 입력 칸(클릭하면 별점 선택, 리뷰 입력)#}
+{#                            클릭하면 모달 창 나옴#}
                             <input id="input-post" class="input is-rounded " placeholder="어떤 맛인가요?"
                                    onclick='$("#modal-post").addClass("is-active")' autocomplete="off">
                         </p>
