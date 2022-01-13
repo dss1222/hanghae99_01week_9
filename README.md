@@ -41,29 +41,29 @@ __치킨어때__ 는 나만 먹기 아까운 맛있는 치킨들을 공유하고
 * 와이어 프레임
 
 ##### 로그인 화면
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmZBTV%2FbtrqobWjeRN%2F5gQ4HBfkVtLwUMiAzrwHuk%2Fimg.png" width="50%" height="50%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmZBTV%2FbtrqobWjeRN%2F5gQ4HBfkVtLwUMiAzrwHuk%2Fimg.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 ##### 회원가입 화면
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbvt2GB%2FbtrqmM3MyVl%2FOGIVG0TzR4rKjIx0N4Q9MK%2Fimg.png" width="50%" height="50%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbvt2GB%2FbtrqmM3MyVl%2FOGIVG0TzR4rKjIx0N4Q9MK%2Fimg.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 ##### 메인 화면
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbN8G6u%2FbtrqoaJRUXK%2FLbYrEIhu3ICXtqvR9KxowK%2Fimg.png" width="50%" height="50%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbN8G6u%2FbtrqoaJRUXK%2FLbYrEIhu3ICXtqvR9KxowK%2Fimg.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 ##### 세부 화면
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcu4N5U%2FbtrqdUhJP5z%2Fn0CTvWtu8Q3OTBpMYVMpAk%2Fimg.png" width="50%" height="50%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcu4N5U%2FbtrqdUhJP5z%2Fn0CTvWtu8Q3OTBpMYVMpAk%2Fimg.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 
 * 프로젝트 결과
 ##### 로그인 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279844-f887d178-8149-42b3-9e4e-bb7684e36e2d.png){: width=100% height=100%}
+![image](https://user-images.githubusercontent.com/96603945/149279844-f887d178-8149-42b3-9e4e-bb7684e36e2d.png){: width="100%" height="100%"}
 
 ##### 회원가입 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279932-88e96d46-e79b-4006-9806-ce59697e8b55.png){: width=100% height=100%}
+![image](https://user-images.githubusercontent.com/96603945/149279932-88e96d46-e79b-4006-9806-ce59697e8b55.png){: width="100%" height="100%"}
 
 ##### 메인 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279997-cfbdeb4c-15b1-4877-bddd-eacde903016d.png){: width=100% height=100%}
+![image](https://user-images.githubusercontent.com/96603945/149279997-cfbdeb4c-15b1-4877-bddd-eacde903016d.png){: width="100%" height="100%"}
 
 ##### 세부 페이지
-![image](https://user-images.githubusercontent.com/96603945/149280101-7aeda5ab-8a48-4afc-a5e1-8cc0ae9e06b4.png){: width=100% height=100%}
+![image](https://user-images.githubusercontent.com/96603945/149280101-7aeda5ab-8a48-4afc-a5e1-8cc0ae9e06b4.png){: width="100%" height="100%"}
 
 #### 로그아웃 클릭시
-![image](https://user-images.githubusercontent.com/96603945/149280214-fa470102-a745-4db6-ba72-cc7c419c3fb4.png){: width=100% height=100%}
+![image](https://user-images.githubusercontent.com/96603945/149280214-fa470102-a745-4db6-ba72-cc7c419c3fb4.png){: width="100%" height="100%"}
 
 
 ## 문제해결 방법
