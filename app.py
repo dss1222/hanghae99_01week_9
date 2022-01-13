@@ -32,7 +32,7 @@ def home():
             chicken["count_heart"] = db.likes.count_documents({"post_id": chicken["_id"], "type": "up"})
             chicken["heart_by_me"] = bool(db.likes.find_one({"post_id": chicken["_id"], "type": "up", "username": payload['id']}))
         # 좋아요 순서대로 정렬
-        new_chickens = sorted(chickens, key = lambda chicken:chicken['heart_by_me'], reverse = True)
+        new_chickens = sorted(chickens, key = lambda chicken:chicken['count_heart'], reverse = True)
 
         return render_template('index.html', chickens=new_chickens) #정렬된 데이터를 index.html에 전달
     except jwt.ExpiredSignatureError:
