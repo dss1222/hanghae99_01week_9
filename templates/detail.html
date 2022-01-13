@@ -104,35 +104,33 @@
             let target = "{{ chicken.name }}";
 
 
-            if (comment == ""|| star == "나의 점수는?") {
+            if (comment == "" || star == "나의 점수는?") {
                 // comment나 star 입력 란에 값이 없으면 메시지
-                if(comment == "") alert('리뷰를 입력해주세요')
+                if (comment == "") alert('리뷰를 입력해주세요')
                 else alert('별점을 입력해주세요')
 
             } else {
                 // 입력 값 있으면 서버에 입력 정보 보내기
                 $.ajax({
-                type: "POST",
-                url: "/posting",
-                data: {
-                    target_give: target,
-                    star_give: star,
-                    comment_give: comment,
-                    date_give: today
-                },
-                success: function (response) {
-                    //성공하면 모달창 닫기
-                    $("#modal-post").removeClass("is-active")
-                    window.location.href = "/detail/{{ chicken.name }}"
-                }
-            })
+                    type: "POST",
+                    url: "/posting",
+                    data: {
+                        target_give: target,
+                        star_give: star,
+                        comment_give: comment,
+                        date_give: today
+                    },
+                    success: function (response) {
+                        //성공하면 모달창 닫기
+                        $("#modal-post").removeClass("is-active")
+                        window.location.href = "/detail/{{ chicken.name }}"
+                    }
+                })
 
 
             }
 
         }
-
-
 
 
         function get_posts() {
@@ -162,8 +160,9 @@
                                                             <br> ${post['star']} <small>${time_before}</small>
                                                               <br>
                                                                <br>${post['comment']}
-
-
+                                                                    <div>
+                                                                        <button class="delete" onclick="deleteStar('${name}')" tton>
+                                                                    </div>
                                                         </p>
                                                     </div>
 
@@ -175,6 +174,18 @@
                     }
                 }
             })
+        }
+
+        function deleteStar(name) { //삭제기능
+            $.ajax({
+                type: 'POST',
+                url: '/api/delete',
+                data: {name_give: name},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
         }
 
         function time2str(date) {
@@ -220,7 +231,7 @@
             <div class="img-box"><img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
             </div>
             <div class="d-flex justify-content-between align-items-end">
-                <div >
+                <div>
                     <h1 id="word" style="display: inline;">{{ chicken.name }}</h1>
                     <h5 id="pronunciation" style="display: inline;">{{ chicken.brand }}</h5>
                 </div>
@@ -280,11 +291,13 @@
                                     </div>
                                     <div class="level-right">
                                         <div class="level-item">
-                                            <a class="button is-warning" onclick="post()" style="text-decoration-line: none">포스팅하기</a>
+                                            <a class="button is-warning" onclick="post()"
+                                               style="text-decoration-line: none">포스팅하기</a>
                                         </div>
                                         <div class="level-item">
                                             <a class="button is-warning is-outlined"
-                                               onclick='$("#modal-post").removeClass("is-active")' style="text-decoration-line: none">취소</a>
+                                               onclick='$("#modal-post").removeClass("is-active")'
+                                               style="text-decoration-line: none">취소</a>
                                         </div>
                                     </div>
                                 </nav>

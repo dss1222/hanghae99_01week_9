@@ -238,6 +238,16 @@ def update_like():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+@app.route('/api/delete', methods=['POST'])
+def delete_star(): #삭제 서버 함수
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        name_receive = request.form['name_give'] #name을 받아옴
+        db.posts.delete_one({}) #posts를 삭제함
+        return jsonify({'msg': '삭제되었습니다.!'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 if __name__ == '__main__':
