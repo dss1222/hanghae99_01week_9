@@ -161,14 +161,14 @@
                                                               <br>
                                                                <br>${post['comment']}
                                                                     <div>
-                                                                        <button class="delete" onclick="deleteStar('${name}')" tton>
+                                                                        <a href="#" class="delete" onclick="deleteStar('${post['comment']}')">삭제</a>
                                                                     </div>
                                                         </p>
                                                     </div>
 
                                                 </div>
                                             </article>
-                                        </div>`
+                                        </div>`;
                             $("#post-box").append(html_temp)
                         }
                     }
@@ -176,11 +176,11 @@
             })
         }
 
-        function deleteStar(name) { //삭제기능
+        function deleteStar(comment) { //삭제기능
             $.ajax({
                 type: 'POST',
-                url: '/api/delete',
-                data: {name_give: name},
+                url: '/delete',
+                data: {comment_give: comment},
                 success: function (response) {
                     alert(response['msg']);
                     window.location.reload()
