@@ -51,19 +51,19 @@ __치킨어때__ 는 나만 먹기 아까운 맛있는 치킨들을 공유하고
 
 * 프로젝트 결과
 ##### 로그인 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279844-f887d178-8149-42b3-9e4e-bb7684e36e2d.png){: width="100%" height="100%"}
+![image](https://user-images.githubusercontent.com/96603945/149279844-f887d178-8149-42b3-9e4e-bb7684e36e2d.png)
 
 ##### 회원가입 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279932-88e96d46-e79b-4006-9806-ce59697e8b55.png){: width="100%" height="100%"}
+![image](https://user-images.githubusercontent.com/96603945/149279932-88e96d46-e79b-4006-9806-ce59697e8b55.png)
 
 ##### 메인 페이지
-![image](https://user-images.githubusercontent.com/96603945/149279997-cfbdeb4c-15b1-4877-bddd-eacde903016d.png){: width="100%" height="100%"}
+![image](https://user-images.githubusercontent.com/96603945/149279997-cfbdeb4c-15b1-4877-bddd-eacde903016d.png)
 
 ##### 세부 페이지
-![image](https://user-images.githubusercontent.com/96603945/149280101-7aeda5ab-8a48-4afc-a5e1-8cc0ae9e06b4.png){: width="100%" height="100%"}
+![image](https://user-images.githubusercontent.com/96603945/149280101-7aeda5ab-8a48-4afc-a5e1-8cc0ae9e06b4.png)
 
 #### 로그아웃 클릭시
-![image](https://user-images.githubusercontent.com/96603945/149280214-fa470102-a745-4db6-ba72-cc7c419c3fb4.png){: width="100%" height="100%"}
+![image](https://user-images.githubusercontent.com/96603945/149280214-fa470102-a745-4db6-ba72-cc7c419c3fb4.png)
 
 
 ## 문제해결 방법
