@@ -6,7 +6,6 @@
     <title>치킨 어때 🍗</title>
 
     <!-- Bootstrap CSS -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     {#
@@ -51,6 +50,7 @@
             max-width: 300px;
         }
 
+        /*좋아요 버튼 */
         .like {
             float: right;
         }
@@ -59,13 +59,14 @@
             font-size: medium;
         }
 
-
+        /*치킨 이미지 크기*/
         .card-img-top {
             height: 320px;
         }
 
+        /*검색 후 highlight 표시 색깔*/
         div.highlight {
-            background: #e8344e;
+            background: RGBA(255, 222, 89);
         }
 
 
@@ -73,113 +74,122 @@
 
     <script>
 
-        //좋아요 함수
-        // function likeChicken(name) {
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/api/like',
-        //         data: {name_give: name},
-        //         success: function (response) {
-        //             alert(response['msg']);
-        //             window.location.reload();
-        //         }
-        //     });
-        // }
+        //**검색 기능**//
 
-
-
-
-
-        //검색기능을 위한 변수 선언
+        // db에 저장된 chickens dataset 받기 (jinja2)
         let chickens = {{ chickens | tojson }} ;
+        // chickens 데이터 속 이름만 list에 넣기
         let chicken_list = [];
         for (let i = 0; i < chickens.length; i++) {
             chicken_list.push(chickens[i]["name"])
-
         }
         console.log(chicken_list)
 
+        // 검색어가 치킨 이름 list에 들었는지 여부 확인
         function find_chicken() {
             let chicken = $("#input-chicken").val().toLowerCase()
             if (chicken == "") {
+                // 검색어를 입력하지 않은 경우, 메시지
                 alert("검색어를 입력해주세요")
                 return
             }
             if (chicken_list.includes(chicken)) {
-                //리스트에 있으면 하이라이트
+                //검색어가 치킨 이름 리스트에 있으면 메시지와 해당 카드 하이라이트
                 alert('찾았습니다!')
+                // 해당 박스 태그에 하이라이트 적용되는 class 추가하기
                 $(`#chicken-${chicken}`).addClass("highlight")
+                // 해당 박스를 제외한 형제 요소의 하이라이트 적용되는 class 제거하기
                 $(`#chicken-${chicken}`).siblings().removeClass("highlight")
+                // 하이라이트한 해당 박스 부분이 보이도록 스크롤
                 $(`#chicken-${chicken}`)[0].scrollIntoView()
 
             } else {
-                //리스트에 없으면 메시지
+                //리스트에 없으면 메시지 후 새로고침
                 alert('그런 치킨은 없어요...')
                 window.location.href = '/'
             }
         }
 
+
+        //**로그아웃 기능**//
         function sign_out() {
+            // 로그아웃 버튼을 누른 해당 유저의 토큰을 삭제
             $.removeCookie('mytoken', {path: '/'})
             alert('로그아웃!')
+            // 로그아웃 후 로그인 페이지로 이동
             window.location.href = "/login"
         }
 
     </script>
 </head>
 <body>
-<div class="wrap"> {# 전체 div #}
+<div class="wrap">
+<!--배너 구역-->
+    <!--    로그 아웃 버튼 클릭 시, sign_out 함수 실행-->
     <a href="" class="badge rounded-pill bg-secondary logout" style="text-decoration-line: none" onclick="sign_out()">로그아웃</a>
-    <div class="banner" onclick="window.location.href = '/'"> {#배너#}</div>
+    <!--    배너 클릭 시, 메인 페이지 이동-->
+    <div class="banner" onclick="window.location.href = '/'"></div>
 
-    <div class="contents"> {# 검색 기능 #}
+    <div class="contents">
         <div class="search-box d-flex justify-content-center">
+            <!--    검색 창 : 입력 후 클릭 시 함수 find_chicken() 실행-->
             <input id="input-chicken" class="form-control" style="margin-right: 0.5rem; border-color: #ffc107;"
                    placeholder="이 치킨은 어때?">
             <button class="btn btn-outline-warning" onclick="find_chicken()"><i class="fa fa-search"></i></button>
         </div>
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            {#jinja2로 for문 돌리기#}
-            {% for chicken in chickens %} {# html #}
+            <!--    서버에서 전달받은 chickens 데이터로 for문을 돌려 각 치킨마다 카드 생성-->
+            <!--    1. for 문 시작-->
+            {% for chicken in chickens %}
             <div class="col" id="chicken-{{ chicken.name }}" >
                 <div class="card h-100" id="{{chicken._id}}">
+                    <!--    치킨 이미지와 이름 클릭하면 상세페이지로 이동-->
                     <a href="/detail/{{ chicken.name }}">
                         <img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="..."></a>
                     <div class="card-body" >
                         <h5 class="card-title"><a href="/detail/{{ chicken.name }}"
                                                   style="text-decoration-line : none; color: black;">{{ chicken.name }}
 
+                            <!--    좋아요 버튼 : 클릭 시 좋아요 기능 함수 실행-->
                             <a href="#" onclick="toggle_like('{{ chicken._id }}', 'up')"
                                class="card-footer-item has-text-info type like " aria-label="up"
-                               style="text-decoration-line : none; color:darkorange;"
-                            >                          {% if chicken.heart_by_me == True %}
-                                                      <span class="icon"><i
-                                                              class="fa fa-thumbs-up"
-                                                              aria-hidden="true"></i>
-                                                    </span>
+                               style="text-decoration-line : none; color:darkorange;">
 
-                                {% if chicken.count_heart == 0 %}
-                                <span  class="like-num"></span>
-                                {% else %} <span class="like-num">{{chicken.count_heart}}</span> {% endif %}
+                                <!--   1-1) 해당 유저가 좋아요 누른 적이 있는지 여부에 따른 if문 시작-->
+                                {% if chicken.heart_by_me == True %}
+                                    <!--   1-2) 내가 해당 치킨을 좋아요 누른 적 있을 때, 채워진 아이콘이 보이도록 설정-->
+                                      <span class="icon"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    </span>
 
+                                    <!--   2-1) 좋아요 수가 0일 경우 보이지 않도록 if문 시작-->
+                                    {% if chicken.count_heart == 0 %}
+                                        <span  class="like-num"></span>
+                                    {% else %} <span class="like-num">{{chicken.count_heart}}</span>
+                                    {% endif %}
+                                    <!--   2-2) 좋아요 수가 0일 경우 보이지 않도록 if문 종료-->
+
+                                <!--   1-3) 내가 해당 치킨을 좋아요 누른 적 없을 때, 비워진 아이콘이 보이도록 설정-->
                                 {% else %}
-                                <span class="icon"><i
-                                                              class="fa fa-thumbs-o-up"
-                                                              aria-hidden="true"></i>
-                                                    </span>{% if chicken.count_heart == 0 %}
-                                <span  class="like-num"></span>
-                                {% else %} <span  class="like-num">{{chicken.count_heart}}</span> {% endif %}
-                                {% endif %}
-                            </a>
+                                <span class="icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                    </span>
+                                    <!--   2-1) 좋아요 수가 0일 경우 보이지 않도록 if문 시작-->
+                                    {% if chicken.count_heart == 0 %}
+                                        <span  class="like-num"></span>
+                                    {% else %} <span  class="like-num">{{chicken.count_heart}}</span> {% endif %}
+                                    <!--   2-2) 좋아요 수가 0일 경우 보이지 않도록 if문 종료-->
 
+                                {% endif %}
+                                <!--   1-4) 해당 유저가 좋아요 누른 적이 있는지 여부에 따른 if문 종료-->
+                            </a>
                         </h5>
                         <p class="card-text"><small class="text-muted">{{ chicken.brand }}</small></p>
-                        {# <p class="card-text">{{ chicken.status }}</p>#}
 
                     </div>
                 </div>
             </div>
             {% endfor %}
+            <!--    2. for 문 종료-->
         </div>
 
 
