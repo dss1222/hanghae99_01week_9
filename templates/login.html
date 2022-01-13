@@ -60,11 +60,11 @@
              {% if msg %}
                      alert("{{ msg }}")
                  {% endif %}
-
+            {#로그인 기능#}
             function sign_in() {
                 let username = $("#input-username").val()
                 let password = $("#input-password").val()
-
+                {#아이디 칸이 공백일때 아이디를 입력해주세요 텍스트를 띄움#}
                 if (username == "") {
                     $("#help-id-login").text("아이디를 입력해주세요.")
                     $("#input-username").focus()
@@ -72,7 +72,7 @@
                 } else {
                     $("#help-id-login").text("")
                 }
-
+                {#비밀번호 칸이 공백일때 비밀번호를 입력해주세요 텍스트를 띄움#}
                 if (password == "") {
                     $("#help-password-login").text("비밀번호를 입력해주세요.")
                     $("#input-password").focus()
@@ -80,6 +80,7 @@
                 } else {
                     $("#help-password-login").text("")
                 }
+                {#아이디와 비밀번호를 서버에 보내고, DB에서 확인이 된 경우 토큰 발급하고 쿠키에 저장#}
                 $.ajax({
                     type: "POST",
                     url: "/sign_in",
@@ -98,44 +99,52 @@
                     }
                 });
             }
-
+            {#회원가입하기를 누를 경우 회원가입을 위한 창으로 전환#}
             function sign_up() {
                 let username = $("#input-username").val()
                 let password = $("#input-password").val()
                 let password2 = $("#input-password2").val()
                 console.log(username, password, password2)
 
-
+                {#아이디 값이 없는 상태에서 중복확인을 했으나 회원가입을 누를 경우#}
                 if ($("#help-id").hasClass("is-danger")) {
                     alert("아이디를 다시 확인해주세요.")
                     return;
+                {#중복확인을 하지 않고 회원가입을 누를 경우#}
                 } else if (!$("#help-id").hasClass("is-success")) {
                     alert("아이디 중복확인을 해주세요.")
                     return;
                 }
-
+                {#비밀번호 입력칸이 공란인 경우#}
                 if (password == "") {
                     $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password").focus()
                     return;
+                {#비밀번호가 정규표현식에 맞지 않는 경우#}
                 } else if (!is_password(password)) {
                     $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                     $("#input-password").focus()
                     return
+                {#비밀번호가 정규표현식에 맞는 경우#}
                 } else {
                     $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
                 }
+                {#비밀번호 재입력칸이 공란인 경우#}
                 if (password2 == "") {
                     $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password2").focus()
                     return;
+                {#비밀번호 입력칸과 비밀번호 재입력칸이 일치하지 않는 경우#}
                 } else if (password2 != password) {
                     $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password2").focus()
                     return;
+                {#비밀번호 입력과 재입력이 일치하는 경우 #}
                 } else {
                     $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
                 }
+                {#여기까지 통과 했을 경우 서버쪽으로 아이디와 암호를 보내고#}
+                {#서버는 비밀번호를 암호화해서 DB에 저장, 완료 되면 회원가입을 축하드립니다 alert을 띄움#}
                 $.ajax({
                     type: "POST",
                     url: "/sign_up/save",
@@ -150,7 +159,9 @@
                 });
 
             }
-
+            {#로그인과 회원가입을 동시에 띄우고#}
+            {#로그인시 필요한 창만 우선적으로 띄우게 함#}
+            {#회원가입을 위해 필요한 창은 안보이게 하고, 회원가입하기를 누르면 창이 전환 됨#}
             function toggle_sign_up() {
                 $("#sign-up-box").toggleClass("is-hidden")
                 $("#div-sign-in-or-up").toggleClass("is-hidden")
@@ -160,30 +171,36 @@
                 $("#help-password2").toggleClass("is-hidden")
             }
 
+            {#정규표현식 아이디 확인#}
             function is_nickname(asValue) {
                 var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
                 return regExp.test(asValue);
             }
-
+            {#정규표현식 비밀번호 확인#}
             function is_password(asValue) {
                 var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
                 return regExp.test(asValue);
             }
 
+            {#아이디 중복 확인#}
             function check_dup() {
                 let username = $("#input-username").val()
                 console.log(username)
+
+                {#아이디를 입력하지 않고 중복확인을 눌렀을 경우#}
                 if (username == "") {
                     $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-username").focus()
                     return;
                 }
+                {#아이디의 형식이 정규표현식과 맞지 않는 경우#}
                 if (!is_nickname(username)) {
                     $("#help-id").text("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
                     $("#input-username").focus()
                     return;
                 }
                 $("#help-id").addClass("is-loading")
+                {#아이디의 형식이 정규표현식에 해당하는 경우 서버로 중복확인 요청#}
                 $.ajax({
                     type: "POST",
                     url: "/sign_up/check_dup",
@@ -191,10 +208,11 @@
                         username_give: username
                     },
                     success: function (response) {
-
+                        {#서버로 보낸 아이디 값이 DB에 이미 존재하는 경우#}
                         if (response["exists"]) {
                             $("#help-id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                             $("#input-username").focus()
+                        {#DB에 존재하지 않는 경우#}
                         } else {
                             $("#help-id").text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
                         }
