@@ -2,6 +2,10 @@
     font-family: 'Hahmlet', serif;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
 
 /*박스 사이즈 조정 */
 .contents {

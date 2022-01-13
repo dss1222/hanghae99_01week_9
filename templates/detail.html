@@ -133,25 +133,25 @@
         }
 
 
-        // function find_chicken() {
-        //     let chicken = $("#input-chicken").val().toLowerCase()
-        //     if (chicken == "") {
-        //         alert("검색어를 입력해주세요")
-        //         return
-        //     }
-        //     if (chicken_list.includes(chicken)) {
-        //         //리스트에 있으면 하이라이트
-        //         alert('찾았습니다!')
-        //         $(`#chicken-${chicken}`).addClass("highlight")
-        //         $(`#chicken-${chicken}`).siblings().removeClass("highlight")
-        //         $(`#chicken-${chicken}`)[0].scrollIntoView()
-        //
-        //     } else {
-        //         //리스트에 없으면 메시지
-        //         alert('그런 치킨은 없어요...')
-        //         window.location.href = '/'
-        //     }
-        // }
+        function find_chicken() {
+            let chicken = $("#input-chicken").val().toLowerCase()
+            if (chicken == "") {
+                alert("검색어를 입력해주세요")
+                return
+            }
+            if (chicken_list.includes(chicken)) {
+                //리스트에 있으면 하이라이트
+                alert('찾았습니다!')
+                $(`#chicken-${chicken}`).addClass("highlight")
+                $(`#chicken-${chicken}`).siblings().removeClass("highlight")
+                $(`#chicken-${chicken}`)[0].scrollIntoView()
+
+            } else {
+                //리스트에 없으면 메시지
+                alert('그런 치킨은 없어요...')
+                window.location.href = '/'
+            }
+        }
 
 
         function get_posts() {
@@ -239,7 +239,7 @@
             <div class="img-box"><img src="{{ chicken.img_url }}" class="card-img-top h-70" alt="...">
             </div>
             <div class="d-flex justify-content-between align-items-end">
-                <div>
+                <div >
                     <h1 id="word" style="display: inline;">{{ chicken.name }}</h1>
                     <h5 id="pronunciation" style="display: inline;">{{ chicken.brand }}</h5>
                 </div>

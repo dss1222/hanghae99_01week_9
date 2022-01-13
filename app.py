@@ -25,8 +25,16 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        chickens = list(db.chicken.find({}, {'_id': False}).sort('like', -1))
-        return render_template('index.html', chickens=chickens)
+        chickens = list(db.chicken.find({}))
+        for chicken in chickens:
+            # 치킨마다 해당 치킨을 좋아요 누른 수/해당 사용자가 누른 것이 맞는지(TorF) chickens 속에 추가
+            chicken["_id"] = str(chicken["_id"])
+            chicken["count_heart"] = db.likes.count_documents({"post_id": chicken["_id"], "type": "up"})
+            chicken["heart_by_me"] = bool(db.likes.find_one({"post_id": chicken["_id"], "type": "up", "username": payload['id']}))
+        # 좋아요 순서대로 정렬
+        new_chickens = sorted(chickens, key = lambda chicken:chicken['heart_by_me'], reverse = True)
+
+        return render_template('index.html', chickens=new_chickens) #정렬된 데이터를 index.html에 전달
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -42,18 +50,18 @@ def home():
 #     return jsonify({'chickens': chicken})
 
 
-@app.route('/api/like', methods=['POST'])
-def like_Chicken():
-    name_receive = request.form['name_give']
-
-    target_chic = db.chicken.find_one({'name': name_receive})
-    current_like = target_chic['like']
-
-    new_like = current_like + 1
-
-    db.chicken.update_one({'name': name_receive}, {'$set': {'like': new_like}})
-
-    return jsonify({'msg': '좋아요 :)'})
+# @app.route('/api/like', methods=['POST'])
+# def like_Chicken():
+#     name_receive = request.form['name_give']
+#
+#     target_chic = db.chicken.find_one({'name': name_receive})
+#     current_like = target_chic['like']
+#
+#     new_like = current_like + 1
+#
+#     db.chicken.update_one({'name': name_receive}, {'$set': {'like': new_like}})
+#
+#     return jsonify({'msg': '좋아요 :)'})
 
 
 
@@ -210,7 +218,23 @@ def update_like():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         # 좋아요 수 변경
-        return jsonify({"result": "success", 'msg': 'updated'})
+
+        user_info = db.users.find_one({"username": payload["id"]})
+        post_id_receive = request.form["post_id_give"]
+        type_receive = request.form["type_give"]
+        action_receive = request.form["action_give"]
+        doc = {
+            "post_id": post_id_receive,
+            "username": user_info["username"],
+            "type": type_receive
+        }
+        if action_receive == "like":
+            db.likes.insert_one(doc)
+        else:
+            db.likes.delete_one(doc)
+        count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
